@@ -39,12 +39,12 @@ def check_comments(comments):
 			print("=========")
 			print ("is this in the branch?")
 
-			#make function check comments 10 days back and compare to the stored number in cache
+			#make function check comments 5 days back and compare to the stored number in cache
 			'''
 			import time
 			import praw
 
-			YESTERDAY = time.time() - (24*60*60)
+			YESTERDAY = time.time() - (5*24*60*60)
 
 			def get_todays(subreddit):
 			    result = []
@@ -69,38 +69,6 @@ def check_comments(comments):
 
 
 def how_many_days_since_creation(comment):
-	#for comment in comments:
-
-		#Kill me now
-		#comment_time = comment.created_utc
-		#current_time = time.strftime('%s', time.gmtime())
-		#current_time = datetime(2012,4,1,0,0).timestamp()
-		#print (current_time)
-		#print (comment_time)
-		#calc_time = ((((current_time - comment_time)/60)/60)/24)
-		#print (calc_time)
-		
-	#parsed_date_comment = datetime.utcfromtimestamp(comment.created_utc)
-	#parsed_date_now = datetime.utcnow()
-	#time_now = time.time()
-	#time_comment = comment.created_utc
-	#day_comment = parsed_date_day
-	'''
-	year_comment = parsed_date_comment.year
-	month_comment = parsed_date_comment.month
-	day_comment = parsed_date_comment.day
-	hour_comment = parsed_date_comment.hour
-	year_now = parsed_date_now.year
-	month_now = parsed_date_now.month
-	day_now = parsed_date_now.day
-	hour_now = parsed_date_now.hour
-	'''
-	#howmanydays = ((year_comment*365*24)+(month_comment*30*24)+(day_comment*24)+hour_comment)-((year_now*365*24)+(month_now*30*24)+(day_now*24)+hour_comment)
-	#print (currentday)
-	#print (time_comment)
-	#print (time_now)
-	#print (math.ceil(((time.time()-comment.created_utc)/60)/60))
-	#return howmanydays
 
 
 while True:
