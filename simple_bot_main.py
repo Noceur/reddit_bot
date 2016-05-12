@@ -37,6 +37,7 @@ def check_comments(comments):
 			#print (how_many_days_since_creation(comment))
 			print (math.ceil(((time.time()-comment.created_utc)/60)/60))
 			print("=========")
+			print("testing git")
 
 			#make function check comments 10 days back and compare to the stored number in cache
 			'''
