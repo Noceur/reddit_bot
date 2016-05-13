@@ -18,7 +18,7 @@ words_to_match 				= ["test"]
 words_to_exclude 			= ["soccer", "football"]
 cache 						= []
 daysofcommentstofetch 		= time.time() - (1*5*60*60) #5 hours (for testing)
-#indexes numbers, decides
+#index numbers, decides what to delete or modify
 indexid 					= 0
 indexlink 					= indexid+1
 indexscore 					= indexid+2
@@ -54,12 +54,11 @@ def check_comments(comments):
 				print ("=========")
 
 				#switch this out for a list in a list cache.append(comment.id, comment.permalink, comment.score) then loop through it with for item in cache: item[x]
+				#use cache extend?
 				cache.append(comment.id)
 				cache.append(comment.permalink)
 				cache.append(comment.score)
 				cache.append(comment_age) #comment unix time age (from 1970 to the time comment was written)
-
-
 
 
 
