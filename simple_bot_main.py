@@ -10,9 +10,24 @@ r.login("Useless_bot_5003", "botbotbot")
 
 print ("\n\n\n\n\n\n\n ==============================")
 
-words_to_match = ["test"]
-words_to_exclude = ["soccer", "football"]
-cache = []
+#=====================================
+#			VARIABLES
+#=====================================
+
+words_to_match 				= ["test"]
+words_to_exclude 			= ["soccer", "football"]
+cache 						= []
+daysofcommentstofetch 		= time.time() - (6*24*60*60) #6 days
+#indexes numbers, decides
+indexid 					= 0
+indexlink 					= indexid+1
+indexscore 					= indexid+2
+indexage					= indexid+3
+
+
+#=====================================
+#			FUNCTIONS
+#=====================================
 
 def run_bot(subtoget):
 	print ("==Getting subreddits==")
@@ -29,15 +44,17 @@ def check_comments(comments):
 		isMatch = any(string in comment_text for string in words_to_match)
 		if comment.id not in cache and isMatch and comment.score >= 1:
 			cache.append(comment.id)
+			comment_age = (((comment.created_utc)/60)/60)
+
 			#watchlist_add(comment.id, comment.created)
 			print ("Comment ID: \t\t" + comment.id + "\nComment permalink: \t" + comment.permalink + "\nComment score: \t\t" + str(comment.score))
 			#commenttime = datetime.datetime.fromtimestamp(comment.created)
 			#print (datetime.datetime.now() - commenttime)
 			#print (comment.created)
 			#print (how_many_days_since_creation(comment))
+
 			print (math.ceil(((time.time()-comment.created_utc)/60)/60))
 			print("=========")
-			print ("is this in the branch?")
 
 
 
@@ -45,8 +62,6 @@ def check_comments(comments):
 			'''
 			import time
 			import praw
-
-			YESTERDAY = time.time() - (5*24*60*60)
 
 			def get_todays(subreddit):
 			    result = []
@@ -61,8 +76,13 @@ def check_comments(comments):
 			todays = get_todays(sub)
 			'''
 
-#def watchlist_clean():
+#def watchlist_clean(comment_age, comment_id):
 	#use how_many_days_since_creation, if comment age > 10 then delete comment from cache
+	#if comment_age >= 120:
+		#comment_index = whateverlist.index(comment_id)
+
+
+#def load_cache_from_file()
 
 #def watchlist_add():
 	#adds comment to watchlist
@@ -70,7 +90,10 @@ def check_comments(comments):
 #def watchlist_update():
 
 
-def how_many_days_since_creation(comment):
+
+#def how_many_days_since_creation(comment):
+
+
 
 
 while True:
