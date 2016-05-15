@@ -14,14 +14,16 @@ print ("\n\n\n\n\n\n\n==============================")
 #			VARIABLES
 #=====================================
 
-words_to_match 				= ["test"]
-words_to_exclude 			= ["soccer", "football"]
-cache 						= []
-daysofcommentstofetch 		= time.time() - (1*5*60*60) #5 hours (for testing)
+subtoget					= "test"
+words_to_match				= ["test"]
+words_to_exclude			= ["soccer", "football"]
+cache						= []
+daysofcommentstofetch 		= time.time() - (6*24*60*60) #5 hours (for testing)
+commentremovalage			= 10 #in hours
 #index numbers, decides what to delete or modify
-indexid 					= 0
-indexlink 					= indexid+1
-indexscore 					= indexid+2
+indexid						= 0
+indexlink					= indexid+1
+indexscore					= indexid+2
 indexage					= indexid+3
 
 
@@ -44,7 +46,7 @@ def check_comments(comments):
 		if comment.created_utc < daysofcommentstofetch: #compares the age of the comment to how many days the variable states, if the comment age is higher then it exits the function.
 			return
 		else:
-			if comment.id not in cache and isMatch and comment.score >= 1:
+			if comment.permalink not in cache and isMatch and comment.score >= 1:
 				#cache.append(comment.id)
 				comment_age = (((comment.created_utc)/60)/60)
 
@@ -55,14 +57,24 @@ def check_comments(comments):
 
 				#switch this out for a list in a list cache.append(comment.id, comment.permalink, comment.score) then loop through it with for item in cache: item[x]
 				#use cache extend?
-				cache.append(comment.id)
+				#cache.append(comment.id)
 				cache.append(comment.permalink)
-				cache.append(comment.score)
-				cache.append(comment_age) #comment unix time age (from 1970 to the time comment was written)
+				#cache.append(comment.score)
+				#cache.append(comment_age) #comment unix time age (from 1970 to the time comment was written)
 
 
 
-
+def check_comment_age(cache):
+	for item in sorted(cache, reverse=True):
+		s = r.get_submission(item)
+		your_comment = s.comments[0]
+		if (((your_comment.created_utc)/60)/60+commentremovalage) <= ((time.time()/60)/60) : 
+			print ("comment is older than " + str(commentremovalage) + " hours and will therefor get removed")
+			cache.remove(your_comment.permalink)
+		else :
+			print ("comment not old enough to be deleted")
+		print (((your_comment.created_utc)/60)/60+commentremovalage)
+		print ((time.time()/60)/60)
 
 
 
@@ -93,10 +105,12 @@ def check_comments(comments):
 
 
 while True:
-	subtoget = "test"
 	run_bot(subtoget)
 	time.sleep(2)
-	print ("comment id, comment permalink, comment score, comment unix age")
+	print ("\n\n==============================\ncomments in list")
 	for item in cache:
 		print(item)
-	time.sleep(100)
+	#check_comment_age(cache)
+	for item in cache:
+		print(item)
+	time.sleep(2)
