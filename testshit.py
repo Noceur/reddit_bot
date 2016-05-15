@@ -1,5 +1,6 @@
 import praw
 import time
+import math
 
 r = praw.Reddit(user_agent = "Simple bot for learning purposes by /u/dynamicstatic")
 
@@ -10,7 +11,7 @@ cache = [['d340aln', 'https://www.reddit.com/r/test/comments/4isyzj/test/d340aln
 
 
 
-
+commentremovalage = 10 #in hours
 
 
 
@@ -26,10 +27,24 @@ indexage					= indexid+3
 
 def check_comments(cache):
 	for item in cache:
-		s = r.get_submission(indexlink)
+		s = r.get_submission(item[indexlink])
 		your_comment = s.comments[0]
-		print (your_comment.id)
-		#if (((your_comment.created_utc/60)/60)+120) >= ((time.time()/60)/60)
+		if (((your_comment.created_utc)/60)/60+commentremovalage) <= ((time.time()/60)/60) : 
+			print ("comment is older than " + str(commentremovalage) + " hours and will therefor get removed")
+		else :
+			print ("comment not old enough to be deleted")
+		print (((your_comment.created_utc)/60)/60+commentremovalage)
+		print ((time.time()/60)/60)
+		#if str(item[indexage]+120) <= str(your_comment.created_utc/60/60) :
+		#	print ("Removing comment" + your_comment.id)
+		#else : 
+		#	print ("Keeping comment")
+
+
+		#print (your_comment.id)
+
+		#if (((your_comment.created_utc/60)/60)+120) >= ((time.time()/60)/60):
+		#	print ("delete comment")
 
 
 while True:
@@ -38,7 +53,7 @@ while True:
 	check_comments(cache)
 	time.sleep(0)
 	print ("comment id, comment permalink, comment score, comment unix age")
-	for item in cache:
+	#for item in cache:
 		#print(item)
-		print(item[indexlink])
+		#print(item[indexlink])
 	time.sleep(100)
