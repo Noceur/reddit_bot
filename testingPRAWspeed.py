@@ -2,6 +2,7 @@ import praw
 import time
 from datetime import datetime
 import math
+import NotifyUser
 
 print ("==Dumbass bot initializing==")
 
@@ -16,7 +17,7 @@ print ("\n\n\n\n\n\n\n==============================")
 
 subtoget					= "test"
 words_to_match				= ["test"]
-words_to_match_2			= ["sucks", "bad", "boring", "vaporware", "dumb", "shit", "trash", "censor", "censorship", "hate", "stupid"]
+words_to_match_2			= ["sucks", "bad", "boring", "vaporware", "dumb", "shit", "trash", "censor", "censorship", "hate", "stupid", "nazi", "scam"]
 words_to_exclude			= ["soccer", "football"]
 cache						= []
 daysofcommentstofetch 		= time.time() - (1*24*60*60) #5 hours (for testing)
@@ -105,4 +106,5 @@ while True:
 	check_comment_age(cache)
 	for item in cache:
 		print(item)
+	NotifyUser.send_msg('TESTING SHIT', cache)
 	time.sleep(2)
