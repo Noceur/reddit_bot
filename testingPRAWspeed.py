@@ -27,7 +27,6 @@ indexid						= 0
 indexlink					= indexid+1
 indexscore					= indexid+2
 indexage					= indexid+3
-print ("test")
 
 
 #=====================================
