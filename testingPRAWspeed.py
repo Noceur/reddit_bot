@@ -20,8 +20,8 @@ words_to_match				= ["test"]
 words_to_match_2			= ["sucks", "bad", "boring", "vaporware", "dumb", "shit", "trash", "censor", "censorship", "hate", "stupid", "nazi", "scam"]
 words_to_exclude			= ["soccer", "football"]
 cache						= []
-daysofcommentstofetch 		= time.time() - (1*24*60*60) #5 hours (for testing)
-commentremovalage			= 10 #in hours
+daysofcommentstofetch 		= time.time() - (1*10*60*60) #5 hours (for testing)
+commentremovalage			= 5 #in hours
 #index numbers, decides what to delete or modify
 indexid						= 0
 indexlink					= indexid+1
