@@ -2,10 +2,11 @@ import praw
 import time
 from datetime import datetime
 import math
+import NotifyUser
 
 print ("==Dumbass bot initializing==")
 
-r = praw.Reddit(user_agent = "Simple bot for learning purposes by /u/dynamicstatic")
+r = praw.Reddit(user_agent = "Learning purposes by /u/dynamicstatic")
 #r.login("Useless_bot_5003", "botbotbot")
 
 print ("\n\n\n\n\n\n\n==============================")
@@ -16,9 +17,10 @@ print ("\n\n\n\n\n\n\n==============================")
 
 subtoget					= "test"
 words_to_match				= ["test"]
+words_to_match_2			= ["sucks", "bad", "boring", "vaporware", "dumb", "shit", "trash", "censor", "censorship", "hate", "stupid", "nazi", "scam"]
 words_to_exclude			= ["soccer", "football"]
 cache						= []
-daysofcommentstofetch 		= time.time() - (6*24*60*60) #5 hours (for testing)
+daysofcommentstofetch 		= time.time() - (1*24*60*60) #5 hours (for testing)
 commentremovalage			= 10 #in hours
 #index numbers, decides what to delete or modify
 indexid						= 0
@@ -37,31 +39,18 @@ def run_bot(subtoget):
 	print ("Using subreddit: " + subtoget)
 	comments = subreddit.get_comments(limit=None)
 	print ("=========")
-	check_comments(comments)
-
-def check_comments(comments):
+	#check_comments(comments)
 	for comment in comments:
 		comment_text = comment.body.lower()
 		isMatch = any(string in comment_text for string in words_to_match)
+		print ("checked text in comment")
 		if comment.created_utc < daysofcommentstofetch: #compares the age of the comment to how many days the variable states, if the comment age is higher then it exits the function.
 			return
 		else:
 			if comment.permalink not in cache and isMatch and comment.score >= 1:
-				#cache.append(comment.id)
-				comment_age = (((comment.created_utc)/60)/60)
-
-				#watchlist_add(comment.id, comment.created)
-				print ("Comment ID: \t\t\t" + comment.id + "\nComment permalink: \t\t" + comment.permalink + "\nComment score: \t\t\t" + str(comment.score))
-				print ("comment age (hours): \t" + str(math.ceil(((time.time()-comment.created_utc)/60)/60)))
-				print ("=========")
-
-				#switch this out for a list in a list cache.append(comment.id, comment.permalink, comment.score) then loop through it with for item in cache: item[x]
-				#use cache extend?
-				#cache.append(comment.id)
+				print ("found one.")
 				cache.append(comment.permalink)
-				#cache.append(comment.score)
-				#cache.append(comment_age) #comment unix time age (from 1970 to the time comment was written)
-
+				
 
 
 def check_comment_age(cache):
@@ -76,6 +65,10 @@ def check_comment_age(cache):
 		print (((your_comment.created_utc)/60)/60+commentremovalage)
 		print ((time.time()/60)/60)
 
+
+#def send_email():
+
+#def compare_age():
 
 
 
@@ -110,7 +103,8 @@ while True:
 	print ("\n\n==============================\ncomments in list")
 	for item in cache:
 		print(item)
-	#check_comment_age(cache)
+	check_comment_age(cache)
 	for item in cache:
 		print(item)
+	NotifyUser.send_msg('TESTING SHIT', cache)
 	time.sleep(2)
