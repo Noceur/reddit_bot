@@ -19,9 +19,8 @@ def send_msg(SUBJECT, TEXT):
 	server.quit()
 	print (message)
 
-item_total = ""
-
 def create_text(TEXT):
+	item_total = ""
 		for item in TEXT:
 			global item_total
 			item_total += item + "\n"
