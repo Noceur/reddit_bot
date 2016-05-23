@@ -18,11 +18,12 @@ print ("\n\n\n\n\n\n\n==============================")
 
 subtoget					= "test"
 words_to_match				= ["test"]
-words_to_match_2			= ["sucks", "bad", "boring", "vaporware", "dumb", "shit", "trash", "censor", "censorship", "hate", "stupid", "nazi", "scam"]
+words_to_match_2			= ["sucks", "bad", "boring", "vaporware", "dumb", "shit", "trash", "censor", "censorship", "hate", "stupid", "nazi", "scam", "awful", "broken", "fail", "hate", "idiot"]
 words_to_exclude			= ["soccer", "football"]
-cache						= []
-daysofcommentstofetch 		= time.time() - (1*10*60*60) #5 hours (for testing)
-commentremovalage			= 5 #in hours
+cache_link					= []
+cache_age					= []
+daysofcommentstofetch 		= time.time() - (1*3*60*60) #5 hours (for testing)
+commentremovalage			= 1 #in hours
 #index numbers, decides what to delete or modify
 indexid						= 0
 indexlink					= indexid+1
@@ -48,64 +49,44 @@ def run_bot(subtoget):
 		if comment.created_utc < daysofcommentstofetch: #compares the age of the comment to how many days the variable states, if the comment age is higher then it exits the function.
 			return
 		else:
-			if comment.permalink not in cache and isMatch and comment.score >= 1:
+			if comment.permalink not in cache_link and isMatch and comment.score >= 1:
 				print ("found one.")
-				cache.append(comment.permalink)
+				cache_link.append(comment.permalink)
+				cache_age.append(timeunixtohour(comment.created_utc))
 				
 
-
-def check_comment_age(cache):
-	for item in sorted(cache, reverse=True):
-		s = r.get_submission(item)
-		your_comment = s.comments[0]
-		if (((your_comment.created_utc)/60)/60+commentremovalage) <= ((time.time()/60)/60) : 
-			print ("comment is older than " + str(commentremovalage) + " hours and will therefor get removed")
-			cache.remove(your_comment.permalink)
+def check_comment_age(cache_link, cache_age):
+	for index, item in sorted(enumerate(cache_link), reverse=True):
+		if (cache_age[index]+commentremovalage) <= timeunixtohour(time.time()) : 
+			print ("deleting index id: " + str(index))
+			del cache_link[int(index)]
+			del cache_age[int(index)]
 		else :
 			print ("comment not old enough to be deleted")
-		print (((your_comment.created_utc)/60)/60+commentremovalage)
-		print ((time.time()/60)/60)
 
 
-#def send_email():
-
-#def compare_age():
-
-
-
-#make function check comments 5 days back and compare to the stored number in cache
+def timeunixtohour(ageinsec):
+	ageinsec = ((ageinsec/60)/60)
+	return ageinsec
+		
 
 
-#def watchlist_clean(comment_age, comment_id):
-	#use how_many_days_since_creation, if comment age > 10 then delete comment from cache
-	#if comment_age >= 120:
-		#comment_index = whateverlist.index(comment_id)
-
-
-#def load_cache_from_file()
-
-#def save_cache_to_file()
-
-#def watchlist_add():
-	#adds comment to watchlist
-
-#def watchlist_update():
-
-
-
-#def how_many_days_since_creation(comment):
-
+	
 
 
 
 while True:
-	run_bot(subtoget)
+	run_bot(subtoget) #create loop with several subs
 	time.sleep(2)
 	print ("\n\n==============================\ncomments in list")
-	for item in cache:
+	for item in cache_link:
 		print(item)
-	check_comment_age(cache)
-	for item in cache:
+	check_comment_age(cache_link, cache_age)
+	for item in cache_link:
 		print(item)
-	NotifyUser.send_msg('TESTING SHIT', cache)
-	time.sleep(2)
+	NotifyUser.send_msg('TESTING SHIT', cache_link, cache_age)
+	time.sleep(5000)
+
+	#subreddit and cache_link in a class (?)
+	#function to remove comment from cache_link
+	#make whole bot run in separate thread, command thread running on the side as well. Check command thread every now and then.
