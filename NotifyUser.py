@@ -8,7 +8,7 @@ def send_msg(SUBJECT, TEXT, TEXT2=[]):
 	fromaddr			= 'anotheruselessbot@gmail.com'
 	toaddrs  			= 'dimoronen@gmail.com'
 	username 			= 'anotheruselessbot@gmail.com'
-	password 			= 'botbotbot'
+	password 			= ''
 	message 			= 'Subject: %s\n\n%s' % (SUBJECT, create_text(TEXT, TEXT2))
 	server 				= smtplib.SMTP('smtp.gmail.com:587')
 
