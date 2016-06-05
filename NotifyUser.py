@@ -21,6 +21,23 @@ def send_msg(SUBJECT, TEXT, TEXT2=[]):
 	server.quit()
 	print (message)
 
+def send_ip(SUBJECT, TEXT):
+	fromaddr			= 'anotheruselessbot@gmail.com'
+	toaddrs  			= 'dimoronen@gmail.com'
+	username 			= 'anotheruselessbot@gmail.com'
+	password 			= ''
+	message 			= 'Subject: %s\n\n%s' % (SUBJECT, TEXT)
+	server 				= smtplib.SMTP('smtp.gmail.com:587')
+
+	#=====================================
+	#			STARTING SERVICE
+	#=====================================
+	server.starttls()
+	server.login(username,password)
+	server.sendmail(fromaddr, toaddrs, message)
+	server.quit()
+	print (message)
+
 def create_text(TEXT, TEXT2):
 	item_total = ""
 	for item in TEXT:
