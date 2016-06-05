@@ -68,6 +68,8 @@ def check_comment_age(cache_link, cache_age):
 def timeunixtohour(ageinsec):
 	ageinsec = ((ageinsec/60)/60)
 	return ageinsec
+
+	print ("test")
 		
 
 
