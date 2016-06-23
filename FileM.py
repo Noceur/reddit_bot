@@ -9,7 +9,7 @@ def save_file(filename, datatosave):
 	print (filename + " saved successfully.")
 
 def load_file(filename):
-	infile = open(os.path.join(os.apyth.dirname(__file__), 'data', filename), "rb")
+	infile = open(os.path.join(os.pyth.dirname(__file__), 'data', filename), "rb")
 	output = pickle.load(infile)
 	print (filename + " loaded successfully.")
 	return output
