@@ -1,13 +1,14 @@
 import pickle
+import os
 
-def save_file(tosave):
-	outfile = open(tosave, "wb")
-	pickle.dump(tosave, outfile)
+def save_file(filename, datatosave):
+	outfile = open(os.path.join(os.path.dirname(__file__), 'data', filename), "wb")
+	pickle.dump(datatosave, outfile)
 	outfile.close()
-	print (tosave + " saved successfully.")
+	print (filename + " saved successfully.")
 
-def load_file(toload):
-	infile = open(toload, "rb")
+def load_file(filename):
+	infile = open(os.path.join(os.path.dirname(__file__), 'data', filename), "rb")
 	output = pickle.load(infile)
-	print (toload + " loaded successfully.")
+	print (filename + " loaded successfully.")
 	return output
